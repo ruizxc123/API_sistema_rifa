@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificações - Rifa Online</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/notificacoes.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/img/logo.svg" alt="Rifa Online">
+                    <span>Rifa<span class="highlight">Online</span></span>
+                </a>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#rifas">Rifas</a>
+                <a href="index.html#como-funciona">Como Funciona</a>
+            </div>
+            
+            <div id="user-menu" class="user-menu">
+                <!-- Será preenchido via JS -->
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <div class="header-title">
+                <h1>🔔 Notificações</h1>
+                <span id="unread-count" class="badge">0</span>
+            </div>
+            <div class="header-actions">
+                <button id="marcar-todas-lidas" class="btn-outline">✓ Marcar todas como lidas</button>
+                <button id="limpar-todas" class="btn-outline-danger">🗑️ Limpar todas</button>
+            </div>
+        </div>
+
+        <div class="notificacoes-filtros">
+            <div class="filtros-tabs">
+                <button class="filtro-tab active" data-filtro="todas">Todas</button>
+                <button class="filtro-tab" data-filtro="nao-lidas">Não lidas</button>
+                <button class="filtro-tab" data-filtro="compras">Compras</button>
+                <button class="filtro-tab" data-filtro="sorteios">Sorteios 🏆</button>
+                <button class="filtro-tab" data-filtro="sistema">Sistema</button>
+            </div>
+        </div>
+
+        <div class="notificacoes-lista" id="notificacoes-lista">
+            <div class="loading-spinner">Carregando notificações...</div>
+        </div>
+
+        <div class="empty-state hidden" id="empty-state">
+            <div class="empty-icon">🔔</div>
+            <h3>Nenhuma notificação</h3>
+            <p>Você está em dia! Quando houver novidades, aparecerão aqui.</p>
+            <a href="index.html#rifas" class="btn-primary">Ver rifas disponíveis</a>
+        </div>
+
+        <div class="pagination" id="pagination" style="display: none;">
+            <button id="prev-page" class="btn-outline" disabled>Anterior</button>
+            <span id="page-info">Página 1</span>
+            <button id="next-page" class="btn-outline">Próxima</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Rifa Online - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/notificacoes.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const isLoggedIn = await verificarAutenticacao();
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            await carregarNotificacoes();
+            inicializarFiltrosNotificacoes();
+        });
+    </script>
+</body>
+</html>

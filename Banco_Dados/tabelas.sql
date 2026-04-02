@@ -1,7 +1,14 @@
-CREATE DATABASE rifa_online;
+-- =============================================
+-- SISTEMA DE RIFAS ONLINE - BANCO DE DADOS
+-- =============================================
+
+-- CRIAR BANCO DE DADOS
+CREATE DATABASE IF NOT EXISTS rifa_online;
 USE rifa_online;
 
--- USUARIO
+-- =============================================
+-- TABELA: USUARIO
+-- =============================================
 CREATE TABLE usuario(
     id_usuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(150) NOT NULL,
@@ -13,7 +20,9 @@ CREATE TABLE usuario(
     status TINYINT NOT NULL DEFAULT 1
 );
 
--- RIFA
+-- =============================================
+-- TABELA: RIFA
+-- =============================================
 CREATE TABLE rifa(
     id_rifa INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(150) NOT NULL,
@@ -27,75 +36,88 @@ CREATE TABLE rifa(
     status ENUM('ativa', 'inativa', 'finalizada') NOT NULL DEFAULT 'ativa'
 );
 
--- BILHETE
-CREATE TABLE bilhete(
-    id_bilhete INT PRIMARY KEY AUTO_INCREMENT,
-    numero INT NOT NULL,
-    status ENUM('disponivel', 'reservado', 'pago', 'cancelado') NOT NULL DEFAULT 'disponivel',
-    data_compra DATETIME DEFAULT NULL,
-    rifa_id INT NOT NULL,
-    usuario_id INT DEFAULT NULL,
-    FOREIGN KEY (rifa_id) REFERENCES rifa(id_rifa),
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    UNIQUE KEY unique_rifa_numero (rifa_id, numero)
-);
-
--- PAGAMENTO
-CREATE TABLE pagamento(
-    id_pagamento INT PRIMARY KEY AUTO_INCREMENT,
-    valor DECIMAL(10,2) NOT NULL,
-    tipo_pagamento VARCHAR(20) NOT NULL,
-    status_pagamento ENUM('pendente', 'pago', 'reembolsado', 'falhou') NOT NULL DEFAULT 'pendente',
-    data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_confirmacao DATETIME DEFAULT NULL,
-    usuario_id INT NOT NULL,
-    bilhete_id INT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (bilhete_id) REFERENCES bilhete(id_bilhete)
-);
-
--- REGISTRO_PAGAMENTO (logs do gateway)
-CREATE TABLE registro_pagamento(
-    id_registro_pagamento INT PRIMARY KEY AUTO_INCREMENT,
-    status_gateway VARCHAR(50),
-    resposta_gateway TEXT,
-    data_transacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    pagamento_id INT NOT NULL,
-    FOREIGN KEY (pagamento_id) REFERENCES pagamento(id_pagamento)
-);
-
--- REEMBOLSO
-CREATE TABLE reembolso(
-    id_reembolso INT PRIMARY KEY AUTO_INCREMENT,
-    motivo TEXT NOT NULL,
-    status ENUM('solicitado', 'aprovado', 'negado', 'processado') NOT NULL DEFAULT 'solicitado',
-    data_solicitacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_processamento DATETIME DEFAULT NULL,
-    pagamento_id INT NOT NULL,
-    FOREIGN KEY (pagamento_id) REFERENCES pagamento(id_pagamento)
-);
-
--- SORTEIO
-CREATE TABLE sorteio(
-    id_sorteio INT PRIMARY KEY AUTO_INCREMENT,
-    data_sorteio DATETIME NOT NULL,
-    metodo_sorteio VARCHAR(30) NOT NULL,
-    resultado VARCHAR(100),
-    numero_sorteado INT,
-    rifa_id INT NOT NULL,
-    bilhete_vencedor_id INT DEFAULT NULL,
-    FOREIGN KEY (rifa_id) REFERENCES rifa(id_rifa),
-    FOREIGN KEY (bilhete_vencedor_id) REFERENCES bilhete(id_bilhete)
-);
-
--- NOTIFICACAO
-CREATE TABLE notificacao(
-    id_notificacao INT PRIMARY KEY AUTO_INCREMENT,
-    tipo ENUM('email', 'sms', 'push') NOT NULL,
-    titulo VARCHAR(200) NOT NULL,
-    mensagem TEXT NOT NULL,
-    data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status ENUM('pendente', 'enviado', 'falhou') NOT NULL DEFAULT 'pendente',
+-- =============================================
+-- TABELA: RESERVA
+-- =============================================
+CREATE TABLE reserva(
+    id_reserva INT PRIMARY KEY AUTO_INCREMENT,
+    data_reserva DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_expiracao DATETIME NOT NULL,
+    status ENUM('ativa', 'expirada', 'convertida') NOT NULL DEFAULT 'ativa',
     usuario_id INT NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
 );
+
+-- =============================================
+-- TABELA: BILHETE
+-- =============================================
+CREATE TABLE bilhete(
+    id_bilhete INT PRIMARY KEY AUTO_INCREMENT,
+    numero INT NOT NULL,
+    status ENUM('disponivel', 'reservado', 'pago') NOT NULL DEFAULT 'disponivel',
+    reserva_id INT DEFAULT NULL,
+    usuario_id INT DEFAULT NULL,
+    rifa_id INT NOT NULL,
+    data_compra DATETIME DEFAULT NULL,
+    FOREIGN KEY (reserva_id) REFERENCES reserva(id_reserva) ON DELETE SET NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE SET NULL,
+    FOREIGN KEY (rifa_id) REFERENCES rifa(id_rifa) ON DELETE CASCADE,
+    UNIQUE KEY unique_rifa_numero (rifa_id, numero)
+);
+
+-- =============================================
+-- TABELA: PAGAMENTO
+-- =============================================
+CREATE TABLE pagamento(
+    id_pagamento INT PRIMARY KEY AUTO_INCREMENT,
+    valor DECIMAL(10,2) NOT NULL,
+    metodo ENUM('pix', 'cartao_credito', 'cartao_debito', 'boleto') NOT NULL,
+    status ENUM('pendente', 'aprovado', 'recusado') NOT NULL DEFAULT 'pendente',
+    data_pagamento DATETIME DEFAULT CURRENT_TIMESTAMP,
+    reserva_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    FOREIGN KEY (reserva_id) REFERENCES reserva(id_reserva) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
+);
+
+-- =============================================
+-- TABELA: SORTEIO
+-- =============================================
+CREATE TABLE sorteio(
+    id_sorteio INT PRIMARY KEY AUTO_INCREMENT,
+    data_sorteio DATETIME NOT NULL,
+    numero_sorteado INT NOT NULL,
+    rifa_id INT NOT NULL,
+    bilhete_vencedor_id INT NOT NULL,
+    FOREIGN KEY (rifa_id) REFERENCES rifa(id_rifa) ON DELETE CASCADE,
+    FOREIGN KEY (bilhete_vencedor_id) REFERENCES bilhete(id_bilhete)
+);
+
+-- =============================================
+-- TABELA: NOTIFICACAO
+-- =============================================
+CREATE TABLE notificacao(
+    id_notificacao INT PRIMARY KEY AUTO_INCREMENT,
+    mensagem TEXT NOT NULL,
+    data_envio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    lida BOOLEAN DEFAULT FALSE,
+    usuario_id INT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE
+);
+
+-- =============================================
+-- ÍNDICES PARA OTIMIZAÇÃO
+-- =============================================
+
+-- Índices para busca rápida
+CREATE INDEX idx_bilhete_status ON bilhete(status);
+CREATE INDEX idx_bilhete_rifa ON bilhete(rifa_id);
+CREATE INDEX idx_reserva_usuario ON reserva(usuario_id);
+CREATE INDEX idx_reserva_status ON reserva(status);
+CREATE INDEX idx_pagamento_usuario ON pagamento(usuario_id);
+CREATE INDEX idx_notificacao_usuario ON notificacao(usuario_id);
+CREATE INDEX idx_rifa_status ON rifa(status);
+CREATE INDEX idx_rifa_data_sorteio ON rifa(data_sorteio);
+
+-- Índice para timeout (limpeza de reservas expiradas)
+CREATE INDEX idx_reserva_expiracao ON reserva(data_expiracao, status);

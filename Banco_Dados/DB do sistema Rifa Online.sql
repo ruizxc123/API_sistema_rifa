@@ -120,8 +120,4 @@ CREATE INDEX idx_rifa_status ON rifa(status);
 CREATE INDEX idx_rifa_data_sorteio ON rifa(data_sorteio);
 
 -- Índice para timeout (limpeza de reservas expiradas)
-<<<<<<< HEAD
 CREATE INDEX idx_reserva_expiracao ON reserva(data_expiracao, status);
-=======
-CREATE INDEX idx_reserva_expiracao ON reserva(data_expiracao, status);
->>>>>>> 3398ddc1aa2f5e68f32b4eead948ce44ac228101

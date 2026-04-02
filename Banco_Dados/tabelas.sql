@@ -5,7 +5,6 @@ GO
 
 -- CRIANDO AS TABELAS DO SISTEMA --
 
-BEGIN TRANSACTION
 
 CREATE TABLE usuario(
     id_usuario INT PRIMARY KEY AUTO_INCREMENT,
@@ -19,12 +18,9 @@ CREATE TABLE usuario(
 
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
-
 
 --------------------------
-BEGIN TRANSACTION
+
 
 CREATE TABLE rifa(
     id_rifa INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,11 +35,9 @@ CREATE TABLE rifa(
     status VARCHAR(20) NOT NULL DEFAULT 'ativa','inativa',
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
 
 -----------------------------
-BEGIN TRANSACTION
+
 
 CREATE TABLE bilhete(
     id_bilhete INT PRIMARY KEY AUTO_INCREMENT,
@@ -58,11 +52,10 @@ CREATE TABLE bilhete(
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
+
 
 -------------------------------
-BEGIN TRANSACTION
+
 
 CREATE TABLE pagamento(
     id_pagamento INT PRIMARY KEY AUTO_INCREMENT,
@@ -77,11 +70,9 @@ CREATE TABLE pagamento(
     FOREIGN key (rifa_id) REFERENCES rifa(id_rifa)
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
 
 --------------------------------
-BEGIN TRANSACTION
+
 
 CREATE TABLE registro_pagamento(
     id_registro_pagamento INT PRIMARY KEY AUTO_INCREMENT,
@@ -92,11 +83,8 @@ CREATE TABLE registro_pagamento(
     FOREIGN KEY (pagamento_id) REFERENCES pagamento(id_pagamento)
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
-
 -------------------------------
-BEGIN TRANSACTION
+
 
 CREATE TABLE reembolso(
     id_reembolso INT PRIMARY KEY AUTO_INCREMENT,
@@ -111,11 +99,10 @@ CREATE TABLE reembolso(
     FOREIGN KEY (bilhete_id) REFERENCES bilhete(id_bilhete)
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
+
 
 ---------------------------------
-BEGIN TRANSACTION
+
 
 CREATE TABLE sorteio(
     id_sorteio INT PRIMARY KEY AUTO_INCREMENT,
@@ -130,12 +117,11 @@ CREATE TABLE sorteio(
     FOREIGN KEY (bilhete_id) REFERENCES bilhete(id_bilhete)
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
+
 
 --------------------------------
 
-BEGIN TRANSACTION
+
 
 CREATE TABLE resultado_sorteio(
     Id_resultado_sorteio INT PRIMARY KEY AUTO_INCREMENT,
@@ -145,12 +131,11 @@ CREATE TABLE resultado_sorteio(
     FOREIGN KEY (sorteio_id) REFERENCES sorteio(id_sorteio)
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
+
 
 -------------------------------
 
-BEGIN TRANSACTION
+
 
 CREATE TABLE notificacao(
     id_notificacao INT PRIMARY KEY AUTO_INCREMENT,
@@ -164,12 +149,10 @@ CREATE TABLE notificacao(
 
 );
 
-ROLLBACK TRANSACTION
-COMMIT;
+;
 
 -------------------------------
 
-BEGIN TRANSACTION
 
 CREATE TABLE painel_admin(
     id_painel_admin INT PRIMARY KEY AUTO_INCREMENT,
@@ -187,5 +170,3 @@ CREATE TABLE painel_admin(
     FOREIGN KEY (resultado_sorteio_id) REFERENCES resultado_sorteio(Id_resultado_sorteio)
 );
 
-ROLLBACK TRANSACTION
-COMMIT;

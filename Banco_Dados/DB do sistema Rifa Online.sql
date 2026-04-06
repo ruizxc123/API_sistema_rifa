@@ -16,6 +16,7 @@ CREATE TABLE usuario(
     cpf VARCHAR(14) NOT NULL UNIQUE,
     telefone VARCHAR(20) NOT NULL,
     senha VARCHAR(200) NOT NULL,
+    tipo ENUM('admin','normal') NOT NULL DEFAULT 'normal',
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     status TINYINT NOT NULL DEFAULT 1
 );
@@ -121,3 +122,27 @@ CREATE INDEX idx_rifa_data_sorteio ON rifa(data_sorteio);
 
 -- Índice para timeout (limpeza de reservas expiradas)
 CREATE INDEX idx_reserva_expiracao ON reserva(data_expiracao, status);
+
+USE rifa_online;
+
+-- Trigger para INSERT (novo usuário)
+DELIMITER $$
+CREATE TRIGGER before_insert_usuario
+BEFORE INSERT ON usuario
+FOR EACH ROW
+BEGIN
+    SET NEW.senha = MD5(NEW.senha);
+END$$
+DELIMITER ;
+
+-- Trigger para UPDATE (alterar senha)
+DELIMITER $$
+CREATE TRIGGER before_update_usuario
+BEFORE UPDATE ON usuario
+FOR EACH ROW
+BEGIN
+    IF NEW.senha != OLD.senha THEN
+        SET NEW.senha = MD5(NEW.senha);
+    END IF;
+END$$
+DELIMITER ;

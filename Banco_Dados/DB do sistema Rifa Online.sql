@@ -16,6 +16,7 @@ CREATE TABLE usuario(
     cpf VARCHAR(14) NOT NULL UNIQUE,
     telefone VARCHAR(20) NOT NULL,
     senha VARCHAR(200) NOT NULL,
+    tipo ENUM('admin','normal') NOT NULL DEFAULT 'normal',
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     status TINYINT NOT NULL DEFAULT 1
 );

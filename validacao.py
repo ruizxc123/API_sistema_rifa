@@ -1,4 +1,4 @@
-[14:05, 06/04/2026] Michele 🦋: def validar_cpf(cpf):
+def validar_cpf(cpf):
     # Remove caracteres não numéricos
     cpf = ''.join(filter(str.isdigit, cpf))
 
@@ -16,8 +16,3 @@
 
     # Verifica se os dígitos calculados batem com os informados
     return dig1 == int(cpf[9]) and dig2 == int(cpf[10])
-[14:06, 06/04/2026] Michele 🦋: cpf = "123.456.789-09"
-if validar_cpf(cpf):
-    print("CPF válido")
-else:
-    print("CPF inválido")

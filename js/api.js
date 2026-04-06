@@ -1,11 +1,28 @@
+let TOKEN = localStorage.getItem('token');
+
+function setToken(token) {
+    TOKEN = token;
+    if (token) {
+        localStorage.setItem('token', token);
+    } else {
+        localStorage.removeItem('token');
+    }
+}
+
 const API = {
     async request(endpoint, options = {}) {
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
+        };
+        
+        // Adicionar token se existir
+        if (TOKEN) {
+            headers['Authorization'] = `Bearer ${TOKEN}`;
+        }
+        
         const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers
-            },
-            credentials: 'include', // Importante para session
+            headers: headers,
             ...options
         };
         
@@ -14,7 +31,7 @@ const API = {
             
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.mensagem || 'Erro na requisição');
+                throw new Error(error.erro || error.mensagem || 'Erro na requisição');
             }
             
             return await response.json();
@@ -24,16 +41,45 @@ const API = {
         }
     },
     
-    // Usuário
-    login(email, senha) {
-        return this.request('/login', {
+    // Login - guarda o token
+    async login(email, senha) {
+        const response = await fetch(`${CONFIG.API_URL}/login`, {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, senha })
         });
+        
+        const data = await response.json();
+        
+        if (data.sucesso && data.token) {
+            setToken(data.token);
+        }
+        
+        if (!response.ok) {
+            throw new Error(data.erro || 'Erro no login');
+        }
+        
+        return data;
     },
     
     logout() {
-        return this.request('/logout', { method: 'POST' });
+        setToken(null);
+        return Promise.resolve({ sucesso: true });
+    },
+    
+    async getSession() {
+        if (!TOKEN) {
+            return { usuario_id: null };
+        }
+        
+        try {
+            const response = await fetch(`${CONFIG.API_URL}/session`, {
+                headers: { 'Authorization': `Bearer ${TOKEN}` }
+            });
+            return await response.json();
+        } catch {
+            return { usuario_id: null };
+        }
     },
     
     registrar(usuario) {
@@ -43,11 +89,6 @@ const API = {
         });
     },
     
-    getSession() {
-        return this.request('/session');
-    },
-    
-    // Rifas
     listarRifas() {
         return this.request('/rifas');
     },
@@ -58,50 +99,5 @@ const API = {
     
     getNumerosRifa(id) {
         return this.request(`/rifas/${id}/numeros`);
-    },
-    
-    // Reservas
-    criarReserva(rifaId, numeros) {
-        return this.request('/reservas/criar', {
-            method: 'POST',
-            body: JSON.stringify({ rifa_id: rifaId, numeros })
-        });
-    },
-    
-    getReservasAtivas() {
-        return this.request('/reservas/ativas');
-    },
-    
-    cancelarReserva(reservaId) {
-        return this.request(`/reservas/${reservaId}/cancelar`, {
-            method: 'DELETE'
-        });
-    },
-    
-    // Pagamento
-    simularPagamento(reservaId, metodo) {
-        return this.request('/pagamentos/simular', {
-            method: 'POST',
-            body: JSON.stringify({ reserva_id: reservaId, metodo })
-        });
-    },
-    
-    // Usuário
-    getMeusBilhetes() {
-        return this.request('/meus-bilhetes');
-    },
-    
-    getHistoricoCompras() {
-        return this.request('/historico-compras');
-    },
-    
-    getNotificacoes() {
-        return this.request('/notificacoes');
-    },
-    
-    marcarNotificacaoLida(id) {
-        return this.request(`/notificacoes/${id}/lida`, {
-            method: 'PUT'
-        });
     }
 };

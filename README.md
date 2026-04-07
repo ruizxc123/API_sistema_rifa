@@ -40,6 +40,8 @@ MYSQL_DATABASE=rifa_online
 # Rodar o servidor
 python app.py
 ```
+----------------------------------------------------------------------------------------------------
+
 ## Documentação do Projeto
 
 A documentação completa da API do Sistema de Rifa Online está disponível no link abaixo:
@@ -54,4 +56,4 @@ Neste repositório, você encontrará:
 
 Esses materiais fornecem uma visão completa do funcionamento, arquitetura e modelagem do sistema.
 
-----------------------------------------------------------------------------------------------------
+

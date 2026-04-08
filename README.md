@@ -1,5 +1,4 @@
 
-markdown
 # 🎲 Rifa Online - Sistema Completo de Sorteios e Rifas
 
 Plataforma web completa para gerenciamento de rifas online, com área de clientes, painel administrativo, sorteios automatizados e simulação de pagamentos.

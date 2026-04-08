@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Perfil - Rifa Online</title>
+    <title>Rifa Online - Sua chance de ganhar!</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/perfil.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
@@ -20,161 +19,66 @@
             
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="index.html#rifas">Rifas</a>
-                <a href="index.html#como-funciona">Como Funciona</a>
+                <a href="#rifas">Rifas</a>
+                <a href="#como-funciona">Como Funciona</a>
             </div>
             
             <div id="user-menu" class="user-menu">
                 <!-- Será preenchido via JS -->
+                <a href="login.html" class="btn-outline">Entrar</a>
+                <a href="cadastro.html" class="btn-primary">Cadastrar</a>
             </div>
         </nav>
     </header>
 
-    <main class="container">
-        <div class="perfil-container">
-            <!-- Sidebar -->
-            <aside class="perfil-sidebar">
-                <div class="perfil-avatar">
-                    <div class="avatar-placeholder" id="avatar-placeholder">
-                        <span id="avatar-iniciais">JD</span>
-                    </div>
-                    <h3 id="perfil-nome">Carregando...</h3>
-                    <p id="perfil-email">carregando@email.com</p>
-                </div>
-                
-                <nav class="perfil-menu">
-                    <a href="#dados-pessoais" class="perfil-menu-item active" data-tab="dados-pessoais">
-                        <span>👤</span> Dados Pessoais
-                    </a>
-                    <a href="#meus-bilhetes" class="perfil-menu-item" data-tab="meus-bilhetes">
-                        <span>🎫</span> Meus Bilhetes
-                    </a>
-                    <a href="#minhas-reservas" class="perfil-menu-item" data-tab="minhas-reservas">
-                        <span>⏳</span> Reservas Ativas
-                    </a>
-                    <a href="#alterar-senha" class="perfil-menu-item" data-tab="alterar-senha">
-                        <span>🔒</span> Alterar Senha
-                    </a>
-                </nav>
-            </aside>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Compre números e <span class="highlight">concorra</span> a prêmios incríveis!</h1>
+                <p>Rifas 100% online, seguras e transparentes</p>
+                <a href="#rifas" class="btn-primary btn-large">Ver Rifas Disponíveis</a>
+            </div>
+        </section>
 
-            <!-- Conteúdo Principal -->
-            <div class="perfil-content">
-                <!-- Aba: Dados Pessoais -->
-                <div id="dados-pessoais" class="tab-content active">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Dados Pessoais</h2>
-                            <button id="btn-editar-perfil" class="btn-outline">✏️ Editar</button>
-                        </div>
-                        
-                        <form id="form-dados-pessoais" class="perfil-form">
-                            <div class="form-group">
-                                <label for="nome">Nome completo</label>
-                                <input type="text" id="nome" name="nome" disabled>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="email">E-mail</label>
-                                    <input type="email" id="email" name="email" disabled>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="telefone">Telefone</label>
-                                    <input type="text" id="telefone" name="telefone" disabled>
-                                </div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="cpf">CPF</label>
-                                    <input type="text" id="cpf" name="cpf" disabled>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="data-cadastro">Data de Cadastro</label>
-                                    <input type="text" id="data-cadastro" name="data-cadastro" disabled>
-                                </div>
-                            </div>
-                            
-                            <div class="form-actions hidden" id="perfil-actions">
-                                <button type="button" id="cancelar-edicao" class="btn-outline">Cancelar</button>
-                                <button type="submit" class="btn-primary">Salvar Alterações</button>
-                            </div>
-                        </form>
-                    </div>
+        <!-- Rifas Section -->
+        <section id="rifas" class="rifas-section">
+            <div class="container">
+                <h2>Rifas Ativas</h2>
+                <div class="rifas-grid" id="rifas-grid">
+                    <div class="loading-spinner">Carregando rifas...</div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Aba: Meus Bilhetes -->
-                <div id="meus-bilhetes" class="tab-content">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Meus Bilhetes</h2>
-                            <div class="filtros">
-                                <select id="filtro-status-bilhetes">
-                                    <option value="todos">Todos</option>
-                                    <option value="ativo">Ativos</option>
-                                    <option value="sorteado">Sorteados</option>
-                                    <option value="encerrado">Encerrados</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div id="bilhetes-container">
-                            <div class="loading-spinner">Carregando seus bilhetes...</div>
-                        </div>
+        <!-- Como Funciona -->
+        <section id="como-funciona" class="como-funciona">
+            <div class="container">
+                <h2>Como Funciona</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Escolha a Rifa</h3>
+                        <p>Selecione uma das rifas disponíveis</p>
                     </div>
-                </div>
-
-                <!-- Aba: Reservas Ativas -->
-                <div id="minhas-reservas" class="tab-content">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Reservas Ativas</h2>
-                            <span class="badge-info">Expira em 5 minutos</span>
-                        </div>
-                        
-                        <div id="reservas-container">
-                            <div class="loading-spinner">Carregando reservas...</div>
-                        </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Selecione os Números</h3>
+                        <p>Escolha seus números da sorte</p>
                     </div>
-                </div>
-
-                <!-- Aba: Alterar Senha -->
-                <div id="alterar-senha" class="tab-content">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Alterar Senha</h2>
-                        </div>
-                        
-                        <form id="form-alterar-senha" class="perfil-form">
-                            <div class="form-group">
-                                <label for="senha-atual">Senha Atual</label>
-                                <input type="password" id="senha-atual" required>
-                                <button type="button" class="toggle-password" onclick="toggleSenha('senha-atual')">👁️</button>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="nova-senha">Nova Senha</label>
-                                    <input type="password" id="nova-senha" required>
-                                    <button type="button" class="toggle-password" onclick="toggleSenha('nova-senha')">👁️</button>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="confirmar-senha">Confirmar Nova Senha</label>
-                                    <input type="password" id="confirmar-senha" required>
-                                    <button type="button" class="toggle-password" onclick="toggleSenha('confirmar-senha')">👁️</button>
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="btn-primary">Alterar Senha</button>
-                        </form>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Finalize a Compra</h3>
+                        <p>Simule o pagamento e garanta sua participação</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Acompanhe o Sorteio</h3>
+                        <p>Veja ao vivo quem foi o ganhador</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 
     <footer>
@@ -187,25 +91,11 @@
     <script src="js/utils.js"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/perfil.js"></script>
-    
+    <script src="js/rifa.js"></script>
     <script>
-        function toggleSenha(id) {
-            const input = document.getElementById(id);
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-        
         document.addEventListener('DOMContentLoaded', async () => {
-            const isLoggedIn = await verificarAutenticacao();
-            if (!isLoggedIn) {
-                window.location.href = 'login.html';
-                return;
-            }
-            
-            await carregarPerfil();
-            await carregarMeusBilhetes();
-            await carregarReservasAtivas();
-            inicializarTabs();
+            await verificarAutenticacao();
+            await carregarRifas();
         });
     </script>
 </body>

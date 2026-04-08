@@ -160,85 +160,7 @@ O frontend é composto por arquivos HTML/CSS/JS estáticos. Você pode executá-
 - Navegue até a pasta do projeto e abra o arquivo `index.html` diretamente no navegador
 - **Atenção:** Algumas funcionalidades podem não funcionar corretamente devido a restrições CORS. Prefira usar o Live Server.
 
-## 📁 Estrutura do Projeto
 
-```
-API_sistema_rifa/
-├── app.py                      # Aplicação principal (Flask)
-├── config.py                   # Configurações (banco, secret key)
-├── requirements.txt            # Dependências do Python
-├── .env                        # Variáveis de ambiente (não versionado)
-├── DB do sistema Rifa Online.sql  # Script de criação do banco
-│
-├── database/                   # Conexão com o banco de dados
-│   ├── __init__.py
-│   └── connection.py
-│
-├── models/                     # Modelos (lógica de banco)
-│   ├── __init__.py
-│   ├── usuario.py
-│   ├── rifa.py
-│   ├── bilhete.py
-│   ├── pagamento.py
-│   ├── reserva.py
-│   ├── reembolso.py
-│   ├── sorteio.py
-│   ├── log_admin.py
-│   ├── configuracao.py
-│   └── notificacao.py
-│
-├── routes/                     # Rotas da API (blueprints)
-│   ├── __init__.py
-│   ├── auth.py                 # Login, cadastro, sessão
-│   ├── rifas.py                # Listar rifas, detalhes, números
-│   ├── reservas.py             # Criar, listar, cancelar reservas
-│   └── pagamento.py            # Simular pagamento, meus bilhetes
-│
-├── admin/                      # Módulo administrativo
-│   └── routes.py               # Rotas protegidas para admin
-│
-├── templates/                  # (Futuro) Templates para renderização
-│   └── admin/                  # Páginas HTML do painel admin
-│
-├── css/                        # Estilos do frontend
-│   ├── style.css
-│   ├── auth.css
-│   ├── perfil.css
-│   ├── compras.css
-│   ├── numeros-grid.css
-│   ├── modal.css
-│   ├── timer.css
-│   ├── notificacoes.css
-│   └── responsive.css
-│
-├── js/                         # Scripts do frontend
-│   ├── config.js
-│   ├── utils.js
-│   ├── api.js
-│   ├── auth.js
-│   ├── rifa.js
-│   ├── numeros.js
-│   ├── carrinho.js
-│   ├── reserva.js
-│   ├── pagamento.js
-│   ├── timer.js
-│   ├── perfil.js
-│   ├── compras.js
-│   └── notificacoes.js
-│
-├── assets/                     # Imagens, ícones, etc.
-│   └── img/
-│
-├── index.html                  # Página inicial
-├── login.html                  # Tela de login
-├── cadastro.html               # Tela de cadastro
-├── rifa-detalhe.html           # Detalhes da rifa e compra
-├── meu-perfil.html             # Perfil do usuário
-├── minhas-compras.html         # Histórico de compras
-├── notificacoes.html           # Central de notificações
-│
-└── README.md                   # Este arquivo
-```
 
 
 ## 👑 Painel Administrativo
@@ -289,7 +211,7 @@ Este projeto está sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) par
 ---
 
 Desenvolvido com ❤️ por Rui Ferreira, Pedro Henrique , Michele Silva e João Celino.
-```
+
 
 
 

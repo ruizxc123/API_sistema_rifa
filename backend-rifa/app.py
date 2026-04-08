@@ -7,9 +7,12 @@ import hashlib
 import jwt
 import datetime
 from functools import wraps
+from admin.routes import admin_bp
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = Config.SECRET_KEY
+app.register_blueprint(admin_bp, url_prefix='/api/admin')
+
 
 # CORS liberado para todos (mais simples)
 CORS(app, origins='*')

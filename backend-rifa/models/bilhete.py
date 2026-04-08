@@ -82,3 +82,33 @@ class Bilhete:
         """
         cursor = db.execute_query(query, (usuario_id,))
         return cursor.fetchall()
+        
+    @staticmethod
+    def criar_para_rifa(rifa_id, numero):
+        query = "INSERT INTO bilhete (rifa_id, numero, status) VALUES (%s, %s, 'disponivel')"
+        db.execute_query(query, (rifa_id, numero))
+        db.commit()
+
+    @staticmethod
+    def total_pagos():
+        query = "SELECT COUNT(*) as total FROM bilhete WHERE status='pago'"
+        cursor = db.execute_query(query)
+        return cursor.fetchone()['total']
+
+    @staticmethod
+    def numeros_pagos_por_rifa(rifa_id):
+        query = "SELECT numero FROM bilhete WHERE rifa_id=%s AND status='pago'"
+        cursor = db.execute_query(query, (rifa_id,))
+        return [row['numero'] for row in cursor.fetchall()]
+
+    @staticmethod
+    def buscar_por_numero(rifa_id, numero):
+        query = "SELECT * FROM bilhete WHERE rifa_id=%s AND numero=%s"
+        cursor = db.execute_query(query, (rifa_id, numero))
+        return cursor.fetchone()
+
+    @staticmethod
+    def atualizar_status(rifa_id, numero, novo_status):
+        query = "UPDATE bilhete SET status=%s WHERE rifa_id=%s AND numero=%s"
+        db.execute_query(query, (novo_status, rifa_id, numero))
+        db.commit()

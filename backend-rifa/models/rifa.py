@@ -61,3 +61,48 @@ class Rifa:
         cursor = db.execute_query(query, (id_rifa,))
         result = cursor.fetchone()
         return result['valor_bilhete'] if result else None
+    
+    @staticmethod
+    def listar_todas():
+        query = "SELECT * FROM rifa ORDER BY data_sorteio DESC"
+        cursor = db.execute_query(query)
+        return cursor.fetchall()
+
+    @staticmethod
+    def criar(dados):
+        query = """INSERT INTO rifa (nome, descricao, imagem, data_inicio, data_sorteio,
+                                    valor_bilhete, premio, total_numeros, status)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 'ativa')"""
+        params = (dados['nome'], dados['descricao'], dados['imagem'], dados['data_inicio'],
+                dados['data_sorteio'], dados['valor_bilhete'], dados['premio'], dados['total_numeros'])
+        cursor = db.execute_query(query, params)
+        db.commit()
+        return cursor.lastrowid
+
+    @staticmethod
+    def atualizar(id_rifa, dados):
+        query = """UPDATE rifa SET nome=%s, descricao=%s, imagem=%s, data_inicio=%s,
+                data_sorteio=%s, valor_bilhete=%s, premio=%s, total_numeros=%s
+                WHERE id_rifa=%s"""
+        params = (dados['nome'], dados['descricao'], dados['imagem'], dados['data_inicio'],
+                dados['data_sorteio'], dados['valor_bilhete'], dados['premio'], dados['total_numeros'], id_rifa)
+        db.execute_query(query, params)
+        db.commit()
+
+    @staticmethod
+    def total_ativas():
+        query = "SELECT COUNT(*) as total FROM rifa WHERE status='ativa'"
+        cursor = db.execute_query(query)
+        return cursor.fetchone()['total']
+
+    @staticmethod
+    def encerrar(id_rifa):
+        query = "UPDATE rifa SET status='encerrada' WHERE id_rifa=%s"
+        db.execute_query(query, (id_rifa,))
+        db.commit()
+
+    @staticmethod
+    def cancelar(id_rifa):
+        query = "UPDATE rifa SET status='cancelada' WHERE id_rifa=%s"
+        db.execute_query(query, (id_rifa,))
+        db.commit()

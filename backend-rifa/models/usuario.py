@@ -20,11 +20,7 @@ class Usuario:
         
         return cursor.lastrowid
     
-    @staticmethod
-    def buscar_por_email(email):
-        query = "SELECT * FROM usuario WHERE email = %s"
-        cursor = db.execute_query(query, (email,))
-        return cursor.fetchone()
+
     
     @staticmethod
     def buscar_por_id(id_usuario):
@@ -69,3 +65,21 @@ class Usuario:
         db.commit()
         
         return True
+    
+    @staticmethod
+    def total_ativos():
+        query = "SELECT COUNT(*) as total FROM usuario WHERE status = 1"
+        cursor = db.execute_query(query)
+        return cursor.fetchone()['total']
+
+    @staticmethod
+    def listar_todos():
+        query = "SELECT id_usuario, nome, email, cpf, tipo, status, data_cadastro FROM usuario ORDER BY data_cadastro DESC"
+        cursor = db.execute_query(query)
+        return cursor.fetchall()
+
+    @staticmethod
+    def bloquear_desbloquear(id_usuario):
+        query = "UPDATE usuario SET status = NOT status WHERE id_usuario = %s"
+        db.execute_query(query, (id_usuario,))
+        db.commit()

@@ -146,11 +146,12 @@ cloudinary.config(
 @app.route("/")
 def index():
     return '''
-    <h2>Upload de imagem</h2>
+    '''<h2>Upload de imagem</h2>
     <form method="POST" action="/upload" enctype="multipart/form-data">
         <input type="file" name="imagem" required>
         <button type="submit">Enviar</button>
     </form>
+    '''
     '''
 
 @app.route("/upload", methods=["POST"])
@@ -166,11 +167,12 @@ def upload():
     resultado = cloudinary.uploader.upload(file)
     url_imagem = resultado["secure_url"]
 
-    return f'''
+    return f''''''
     <h3>Imagem enviada com sucesso!</h3>
     <img src="{url_imagem}" width="300"><br>
     <p>{url_imagem}</p>
     '''
-
+'''''''''
 if __name__ == "__main__":
-    app.run(debug=False, use_reloader=False)'''
+    app.run(debug=False, use_reloader=False)
+'''

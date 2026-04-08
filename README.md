@@ -1,4 +1,3 @@
-Aqui está um **README.md profissional e completo** para o seu projeto, baseado em toda a estrutura que você construiu.
 
 markdown
 # 🎲 Rifa Online - Sistema Completo de Sorteios e Rifas

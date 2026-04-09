@@ -8,7 +8,7 @@ Plataforma web completa para gerenciamento de rifas online, com área de cliente
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-orange.svg)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 
-## 📋 Índice
+## Índice
 
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Funcionalidades](#funcionalidades)
@@ -24,7 +24,7 @@ Plataforma web completa para gerenciamento de rifas online, com área de cliente
 - [Documentação Completa](#documentação-completa)
 - [Licença](#licença)
 
-## 🚀 Sobre o Projeto
+##  Sobre o Projeto
 
 O **Rifa Online** é um sistema completo para criação e gerenciamento de rifas online. Desenvolvido com Flask no backend e HTML/CSS/JavaScript puro no frontend, oferece:
 
@@ -37,19 +37,19 @@ O **Rifa Online** é um sistema completo para criação e gerenciamento de rifas
 
 Ideal para organizadores de rifas que buscam uma solução profissional, transparente e escalável.
 
-## ✨ Funcionalidades
+## Funcionalidades
 
-### 👥 Área do Cliente
+### Área do Cliente
 - Cadastro e login com sessão JWT
 - Visualização de rifas ativas com contagem regressiva
 - Seleção de números em grid interativo
-- Carrinho de compras com reserva temporária (5 minutos)
+
 - Simulação de pagamento (modo de demonstração)
-- Histórico de compras com filtros e estatísticas
+- Histórico de compras com filtros 
 - Perfil do usuário com edição de dados e troca de senha
 - Notificações sobre compras e resultados
 
-### 👑 Painel Administrativo
+### Painel Administrativo
 - Login exclusivo para administradores
 - Dashboard com métricas (rifas ativas, vendas, usuários, bilhetes)
 - CRUD completo de rifas (criar, editar, listar)
@@ -61,7 +61,7 @@ Ideal para organizadores de rifas que buscam uma solução profissional, transpa
 - Configurações gerais da plataforma
 - Logs de ações dos administradores
 
-## 🛠 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Backend
 - **Flask** - Framework web
@@ -80,7 +80,7 @@ Ideal para organizadores de rifas que buscam uma solução profissional, transpa
 - **VS Code** - IDE recomendada
 - **Git** - Controle de versão
 
-## 📦 Pré-requisitos
+##  Pré-requisitos
 
 Antes de começar, você precisará ter instalado em sua máquina:
 
@@ -88,7 +88,7 @@ Antes de começar, você precisará ter instalado em sua máquina:
 - [MySQL Server 8.0+](https://dev.mysql.com/downloads/mysql/) (ou XAMPP/WAMP)
 - [Git](https://git-scm.com/) (opcional, para clonar o repositório)
 
-## 🔧 Instalação e Execução
+## Instalação e Execução
 
 ### Backend (API)
 
@@ -163,7 +163,7 @@ O frontend é composto por arquivos HTML/CSS/JS estáticos. Você pode executá-
 
 
 
-## 👑 Painel Administrativo
+##  Painel Administrativo
 
 Para acessar o painel administrativo, você pode:
 
@@ -175,7 +175,7 @@ Para acessar o painel administrativo, você pode:
 
 Crie um administrador manualmente no banco (já mostrado acima) e utilize ferramentas como Postman, Insomnia ou o próprio frontend (se adaptado) para consumir as rotas.
 
-## 🔐 Variáveis de Ambiente
+##  Variáveis de Ambiente
 
 O projeto utiliza um arquivo `.env` para configurações sensíveis. Exemplo:
 
@@ -192,7 +192,7 @@ MYSQL_DATABASE=rifa_online
 
 **Nunca versione o arquivo `.env`** – adicione-o ao `.gitignore`.
 
-## 📚 Documentação Completa
+## Documentação Completa
 
 A documentação detalhada do sistema (requisitos, diagramas, regras de negócio) está disponível no Google Drive:
 
@@ -204,13 +204,13 @@ Nesta pasta você encontrará:
 - Diagrama de classes e casos de uso
 - Matriz de rastreabilidade
 
-## 📄 Licença
+## Licença
 
 Este projeto está sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais informações.
 
 ---
 
-Desenvolvido com ❤️ por Rui Ferreira, Pedro Henrique , Michele Silva e João Celino.
+Desenvolvido  por Rui Ferreira, Pedro Henrique , Michele Silva e João Celino.
 
 
 

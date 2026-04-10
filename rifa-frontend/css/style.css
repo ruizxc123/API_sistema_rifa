@@ -6,16 +6,17 @@
 }
 
 :root {
-    --primary: #3b82f6;      /* Azul principal */
-    --primary-dark: #2563eb; /* Azul escuro */
+    --primary: #3b82f6;      /* Azul vibrante */
+    --primary-dark: #1d4ed8; /* Azul escuro */
     --primary-light: #60a5fa; /* Azul claro */
-    --secondary: #10b981;     /* Verde */
-    --danger: #ef4444;        /* Vermelho */
-    --warning: #f59e0b;       /* Laranja */
-    --dark: #1e293b;          /* Escuro */
-    --gray: #64748b;          /* Cinza */
-    --light: #f1f5f9;         /* Claro */
+    --secondary: #10b981;     /* Verde - sucesso */
+    --danger: #ef4444;        /* Vermelho - erro */
+    --warning: #f59e0b;       /* Laranja - alerta */
+    --dark: #1e293b;          /* Cinza escuro */
+    --gray: #64748b;          /* Cinza médio */
+    --light: #f8fafc;         /* Cinza muito claro */
     --white: #ffffff;
+    --gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
 }
 
 body {

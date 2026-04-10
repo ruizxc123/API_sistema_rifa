@@ -20,6 +20,43 @@ async function verificarAutenticacao() {
     }
 }
 
+async function fazerCadastro(event) {
+    event.preventDefault();
+    
+    const usuario = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        cpf: document.getElementById('cpf').value,
+        telefone: document.getElementById('telefone').value,
+        senha: document.getElementById('senha').value
+    };
+    
+    const senhaConfirm = document.getElementById('senha-confirm').value;
+    
+    if (usuario.senha !== senhaConfirm) {
+        mostrarMensagem('Senhas não conferem', 'error');
+        return;
+    }
+    
+    loading(true);
+    
+    try {
+        const result = await API.registrar(usuario);
+        
+        if (result.sucesso) {
+            mostrarMensagem('Cadastro realizado com sucesso! Faça login.');
+            window.location.href = 'login.html';
+        } else {
+            mostrarMensagem(result.erro || 'Erro ao cadastrar', 'error');
+        }
+    } catch (error) {
+        console.error('Erro no cadastro:', error);
+        mostrarMensagem(error.message || 'Erro ao cadastrar', 'error');
+    } finally {
+        loading(false);
+    }
+}
+
 async function fazerLogin(event) {
     event.preventDefault();
     

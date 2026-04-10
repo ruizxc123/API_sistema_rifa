@@ -12,12 +12,10 @@ async function simularPagamento(metodo) {
             mostrarMensagem('✅ Pagamento realizado com sucesso! Boa sorte no sorteio!', 'success');
             fecharModalPagamento();
             
-            // Limpar seleção e recarregar números
             numerosSelecionados = [];
             atualizarCarrinho();
             await carregarMapaNumeros(rifaAtualId);
             
-            // Redirecionar para meus bilhetes após 2 segundos
             setTimeout(() => {
                 window.location.href = 'minhas-compras.html';
             }, 2000);

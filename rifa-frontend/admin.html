@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Rifa Online</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/img/image.png" width="3em" alt="Rifa Online">
+                    <span>Rifa<span class="highlight">Online</span></span>
+                </a>
+            </div>
+            
+            <div class="nav-links">
+                <a href="admin.html" class="active">Dashboard</a>
+                <a href="admin-rifas.html">Rifas</a>
+                <a href="admin-usuarios.html">Usuários</a>
+                <a href="index.html">Ver Site</a>
+            </div>
+            
+            <div id="user-menu" class="user-menu"></div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="admin-header">
+            <h1>👑 Painel Administrativo</h1>
+            <p>Gerencie rifas, usuários e sorteios</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🎫</div>
+                <div class="stat-info">
+                    <span class="stat-label">Total de Rifas</span>
+                    <span class="stat-value" id="total-rifas">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <span class="stat-label">Bilhetes Vendidos</span>
+                    <span class="stat-value" id="total-vendidos">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <span class="stat-label">Usuários</span>
+                    <span class="stat-value" id="total-usuarios">0</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-info">
+                    <span class="stat-label">Rifas Finalizadas</span>
+                    <span class="stat-value" id="total-finalizadas">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-actions">
+            <button class="btn-primary" onclick="location.href='admin-criar-rifa.html'">
+                ➕ Criar Nova Rifa
+            </button>
+        </div>
+
+        <div class="rifas-table-container">
+            <h2>Últimas Rifas</h2>
+            <table class="rifas-table" id="rifas-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Prêmio</th>
+                        <th>Valor</th>
+                        <th>Vendidos</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="rifas-list">
+                    <tr><td colspan="7">Carregando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Rifa Online - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

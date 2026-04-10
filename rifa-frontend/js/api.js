@@ -99,5 +99,36 @@ const API = {
     
     getNumerosRifa(id) {
         return this.request(`/rifas/${id}/numeros`);
-    }
+    },
+
+// Reservas
+criarReserva(rifaId, numeros) {
+    return this.request('/reservas/criar', {
+        method: 'POST',
+        body: JSON.stringify({ rifa_id: rifaId, numeros: numeros })
+    });
+},
+
+getReservasAtivas() {
+    return this.request('/reservas/ativas');
+},
+
+cancelarReserva(reservaId) {
+    return this.request(`/reservas/${reservaId}/cancelar`, {
+        method: 'DELETE'
+    });
+},
+
+// Pagamento
+simularPagamento(reservaId, metodo) {
+    return this.request('/pagamentos/simular', {
+        method: 'POST',
+        body: JSON.stringify({ reserva_id: reservaId, metodo: metodo })
+    });
+},
+
+getMeusBilhetes() {
+    return this.request('/meus-bilhetes');
+},
 };
+

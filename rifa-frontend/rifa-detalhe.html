@@ -9,6 +9,65 @@
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/timer.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .rifa-detalhe-header {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+            background: var(--white);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .rifa-detalhe-header img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        .rifa-info-texto {
+            flex: 1;
+        }
+        .rifa-info-texto h1 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        .rifa-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            display: block;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        @media (max-width: 768px) {
+            .rifa-detalhe-header {
+                flex-direction: column;
+            }
+            .rifa-detalhe-header img {
+                width: 100%;
+            }
+            .rifa-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -154,41 +213,54 @@
     <script src="js/timer.js"></script>
     
     <script>
-        let rifaAtualId = null;
+    let rifaAtualId = null;
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+        console.log('🔍 Página carregada');
         
-        document.addEventListener('DOMContentLoaded', async () => {
-            await verificarAutenticacao();
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            rifaAtualId = urlParams.get('id');
-            
-            if (!rifaAtualId) {
-                mostrarMensagem('Rifa não encontrada', 'error');
-                setTimeout(() => window.location.href = 'index.html', 2000);
-                return;
-            }
-            
-            await carregarDetalheRifa(rifaAtualId);
-            await carregarMapaNumeros(rifaAtualId);
-        });
+        await verificarAutenticacao();
         
-        async function carregarDetalheRifa(id) {
-            try {
-                const rifa = await API.getRifa(id);
-                
-                document.getElementById('rifa-nome').textContent = rifa.nome;
-                document.getElementById('rifa-imagem').src = rifa.imagem || 'assets/img/placeholder.jpg';
-                document.getElementById('rifa-descricao').textContent = rifa.descricao;
-                document.getElementById('rifa-premio').textContent = rifa.premio;
-                document.getElementById('rifa-valor').textContent = formatarMoeda(rifa.valor_bilhete);
-                document.getElementById('rifa-sorteio').textContent = formatarDataHora(rifa.data_sorteio);
-                
-                window.valorBilhete = parseFloat(rifa.valor_bilhete);
-                
-            } catch (error) {
-                mostrarMensagem('Erro ao carregar detalhes da rifa', 'error');
-            }
+        const urlParams = new URLSearchParams(window.location.search);
+        rifaAtualId = urlParams.get('id');
+        
+        console.log('📌 ID da rifa:', rifaAtualId);
+        
+        if (!rifaAtualId) {
+            mostrarMensagem('Rifa não encontrada', 'error');
+            setTimeout(() => window.location.href = 'index.html', 2000);
+            return;
         }
-    </script>
+        
+        await carregarDetalheRifa(rifaAtualId);
+        
+        // Chamar a função que está no numeros.js
+        if (typeof carregarMapaNumeros === 'function') {
+            console.log('✅ Função carregarMapaNumeros encontrada!');
+            await carregarMapaNumeros(rifaAtualId);
+        } else {
+            console.error('❌ Função carregarMapaNumeros NÃO encontrada!');
+            document.getElementById('numeros-grid').innerHTML = '<p class="error">Erro: função não encontrada</p>';
+        }
+    });
+    
+    async function carregarDetalheRifa(id) {
+        try {
+            const rifa = await API.getRifa(id);
+            console.log('📦 Rifa carregada:', rifa);
+            
+            document.getElementById('rifa-nome').textContent = rifa.nome;
+            document.getElementById('rifa-imagem').src = rifa.imagem || 'assets/img/placeholder.jpg';
+            document.getElementById('rifa-descricao').textContent = rifa.descricao;
+            document.getElementById('rifa-premio').textContent = rifa.premio;
+            document.getElementById('rifa-valor').textContent = formatarMoeda(rifa.valor_bilhete);
+            document.getElementById('rifa-sorteio').textContent = formatarDataHora(rifa.data_sorteio);
+            
+            window.valorBilhete = parseFloat(rifa.valor_bilhete);
+        } catch (error) {
+            console.error('❌ Erro:', error);
+            mostrarMensagem('Erro ao carregar detalhes da rifa', 'error');
+        }
+    }
+</script>
 </body>
 </html>

@@ -1,23 +1,15 @@
-// js/reserva.js
 let reservaAtual = null;
 
 async function reservarNumeros() {
-    if (numerosSelecionados.length === 0) {
+    if (!numerosSelecionados || numerosSelecionados.length === 0) {
         mostrarMensagem('Selecione pelo menos um número', 'warning');
         return;
     }
     
-    // Verificar se está logado
-    try {
-        const session = await API.getSession();
-        if (!session.usuario_id) {
-            mostrarMensagem('Faça login para reservar números', 'warning');
-            setTimeout(() => window.location.href = 'login.html', 1500);
-            return;
-        }
-    } catch (error) {
+    const token = localStorage.getItem('token');
+    if (!token) {
         mostrarMensagem('Faça login para reservar números', 'warning');
-        window.location.href = 'login.html';
+        setTimeout(() => window.location.href = 'login.html', 1500);
         return;
     }
     
@@ -27,12 +19,10 @@ async function reservarNumeros() {
         const result = await API.criarReserva(rifaAtualId, numerosSelecionados);
         reservaAtual = result;
         
-        // Abrir modal de pagamento
         abrirModalPagamento(result);
         
     } catch (error) {
         mostrarMensagem(error.message || 'Erro ao reservar números', 'error');
-        // Recarregar números para atualizar disponibilidade
         await carregarMapaNumeros(rifaAtualId);
     } finally {
         loading(false);
@@ -44,14 +34,13 @@ function abrirModalPagamento(reserva) {
     const reservaNumeros = document.getElementById('reserva-numeros');
     const reservaTotal = document.getElementById('reserva-total');
     
-    // Mostrar números reservados
+    if (!modal) return;
+    
     const numerosOrdenados = reserva.numeros.sort((a, b) => a - b);
     reservaNumeros.textContent = numerosOrdenados.join(', ');
     reservaTotal.textContent = formatarMoeda(reserva.valor_total);
     
-    // Iniciar timer
     iniciarTimer(reserva.expira_em, async () => {
-        // Callback quando expirar
         fecharModalPagamento();
         mostrarMensagem('⏰ Tempo esgotado! Sua reserva foi cancelada.', 'warning');
         await carregarMapaNumeros(rifaAtualId);
@@ -64,8 +53,8 @@ function abrirModalPagamento(reserva) {
 
 function fecharModalPagamento() {
     const modal = document.getElementById('modal-pagamento');
-    modal.classList.add('hidden');
-    pararTimer();
+    if (modal) modal.classList.add('hidden');
+    if (typeof pararTimer === 'function') pararTimer();
 }
 
 async function cancelarReserva() {
@@ -78,7 +67,6 @@ async function cancelarReserva() {
         mostrarMensagem('Reserva cancelada com sucesso', 'success');
         fecharModalPagamento();
         
-        // Recarregar números
         await carregarMapaNumeros(rifaAtualId);
         numerosSelecionados = [];
         atualizarCarrinho();

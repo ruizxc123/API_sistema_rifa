@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Rifa Online</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <span>Rifa<span class="highlight">Online</span></span>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#rifas">Rifas</a>
+                <a href="index.html#como-funciona">Como Funciona</a>
+            </div>
+            <div id="user-menu" class="user-menu">
+                <a href="login.html" class="btn-outline active">Entrar</a>
+                <a href="cadastro.html" class="btn-primary">Cadastrar</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Bem-vindo de volta!</h2>
+                <p>Faça login para continuar</p>
+            </div>
+            
+            <form id="login-form" onsubmit="fazerLogin(event)">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required placeholder="seu@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" required placeholder="••••••••">
+                </div>
+                
+                <button type="submit" class="btn-primary btn-block">Entrar</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p">Não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer><div class="container"><p>&copy; 2026 Rifa Online</p></div></footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const session = await API.getSession();
+                if (session.usuario_id) window.location.href = 'index.html';
+            } catch(e) {}
+        });
+    </script>
+</body>
+</html>

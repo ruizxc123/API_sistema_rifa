@@ -1,0 +1,19 @@
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .rifas-table { display: block; overflow-x: auto; }
+    .carrinho { position: static; width: 100%; margin-top: 20px; }
+    .numeros-grid { grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); }
+    .hero h1 { font-size: 1.8rem; }
+    .nav-links { display: none; }
+    .rifas-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+    .auth-card { padding: 30px 20px; margin: 20px; }
+    .rifa-detalhe-header { flex-direction: column; }
+    .rifa-detalhe-header img { width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .legenda { flex-wrap: wrap; gap: 10px; font-size: 0.8rem; }
+    .numeros-grid { gap: 6px; }
+    .numero { font-size: 0.8rem; }
+}

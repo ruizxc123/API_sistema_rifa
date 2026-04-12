@@ -6,6 +6,14 @@
 CREATE DATABASE IF NOT EXISTS rifa_online;
 USE rifa_online;
 
+- =============================================
+-- SISTEMA DE RIFAS ONLINE - BANCO DE DADOS
+-- =============================================
+
+-- CRIAR BANCO DE DADOS
+CREATE DATABASE IF NOT EXISTS rifa_online;
+USE rifa_online;
+
 -- =============================================
 -- TABELA: USUARIO
 -- =============================================
@@ -146,3 +154,5 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+

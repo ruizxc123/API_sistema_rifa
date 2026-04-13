@@ -11,16 +11,12 @@ Plataforma web completa para gerenciamento de rifas online, com área de cliente
 ## Índice
 
 - [Sobre o Projeto](#sobre-o-projeto)
-- [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Pré-requisitos](#pré-requisitos)
 - [Instalação e Execução](#instalação-e-execução)
   - [Backend (API)](#backend-api)
-  - [Frontend (Interface)](#frontend-interface)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [API Endpoints](#api-endpoints)
-- [Painel Administrativo](#painel-administrativo)
-- [Variáveis de Ambiente](#variáveis-de-ambiente)
 - [Documentação Completa](#documentação-completa)
 - [Licença](#licença)
 
@@ -37,29 +33,6 @@ O **Rifa Online** é um sistema completo para criação e gerenciamento de rifas
 
 Ideal para organizadores de rifas que buscam uma solução profissional, transparente e escalável.
 
-## Funcionalidades
-
-### Área do Cliente
-- Cadastro e login com sessão JWT
-- Visualização de rifas ativas com contagem regressiva
-- Seleção de números em grid interativo
-
-- Simulação de pagamento (modo de demonstração)
-- Histórico de compras com filtros 
-- Perfil do usuário com edição de dados e troca de senha
-- Notificações sobre compras e resultados
-
-### Painel Administrativo
-- Login exclusivo para administradores
-- Dashboard com métricas (rifas ativas, vendas, usuários, bilhetes)
-- CRUD completo de rifas (criar, editar, listar)
-- Gerenciamento manual de números (bloquear/desbloquear)
-- Visualização de todas as vendas com filtros
-- Processamento de solicitações de reembolso
-- Realização de sorteios (aleatório com hash ou integração com loteria)
-- Gestão de usuários (bloquear/desbloquear)
-- Configurações gerais da plataforma
-- Logs de ações dos administradores
 
 ## Tecnologias Utilizadas
 
@@ -146,49 +119,6 @@ Antes de começar, você precisará ter instalado em sua máquina:
    ```
    O servidor será iniciado em `http://localhost:5000`
 
-### Frontend (Interface)
-
-O frontend é composto por arquivos HTML/CSS/JS estáticos. Você pode executá-los de duas formas:
-
-#### Opção 1: Live Server (Recomendado)
-- Instale a extensão **Live Server** no VS Code
-- Abra a pasta do projeto no VS Code
-- Clique com o botão direito em `index.html` e escolha "Open with Live Server"
-- O site será aberto em `http://127.0.0.1:5500`
-
-#### Opção 2: Acesso direto
-- Navegue até a pasta do projeto e abra o arquivo `index.html` diretamente no navegador
-- **Atenção:** Algumas funcionalidades podem não funcionar corretamente devido a restrições CORS. Prefira usar o Live Server.
-
-
-
-
-##  Painel Administrativo
-
-Para acessar o painel administrativo, você pode:
-
-1. **Via API** (recomendado para integração com frontend separado):
-   - Use as rotas `/admin/*` enviando o token JWT obtido no login de admin no header `Authorization: Bearer <token>`.
-
-2. **Via interface HTML (futuro)**:
-   - Acesse `http://localhost:5000/admin/login` (se implementar render_template).
-
-Crie um administrador manualmente no banco (já mostrado acima) e utilize ferramentas como Postman, Insomnia ou o próprio frontend (se adaptado) para consumir as rotas.
-
-##  Variáveis de Ambiente
-
-O projeto utiliza um arquivo `.env` para configurações sensíveis. Exemplo:
-
-```env
-# Chave secreta para JWT e sessões
-SECRET_KEY=rifa-online-secret-key-2024
-
-# Credenciais do MySQL
-MYSQL_HOST=localhost
-MYSQL_USER=root
-MYSQL_PASSWORD=123456
-MYSQL_DATABASE=rifa_online
-```
 
 **Nunca versione o arquivo `.env`** – adicione-o ao `.gitignore`.
 

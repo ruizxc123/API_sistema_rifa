@@ -23,9 +23,9 @@ O backend usa Flask, MySQL, JWT e Flask-CORS. O frontend usa HTML, CSS e JavaScr
    pip install -r backend/requirements.txt
    ```
 
-2. Crie uma configuração local. Copie `backend/.env.example` para `backend/.env`, gere uma chave aleatória com `python -c "import secrets; print(secrets.token_urlsafe(48))"` e configure uma conta MySQL dedicada com senha forte. Nunca use a conta administrativa do MySQL para a aplicação.
+2. Crie uma configuração local. Copie `backend/.env.example` para `backend/.env`, gere uma chave aleatória com `python -c "import secrets; print(secrets.token_urlsafe(48))"` e configure uma conta MySQL dedicada com senha forte. Nunca use a conta administrativa do MySQL para a aplicação. O schema requer MySQL 8.0.16 ou superior.
 
-3. Crie o banco e as tabelas executando `Banco_Dados/DB do sistema Rifa Online.sql` no MySQL.
+3. Para uma instalação nova, crie o banco e as tabelas executando `Banco_Dados/DB do sistema Rifa Online.sql` no MySQL. O script cria tabelas ausentes, mas não altera tabelas já existentes; faça backup e prepare uma migração própria antes de usá-lo em um banco com dados.
 
 4. Inicie a API a partir da pasta `backend`:
 

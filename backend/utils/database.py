@@ -1,16 +1,23 @@
+import logging
+
 import mysql.connector
+from mysql.connector import Error
+
 from config import Config
+
+logger = logging.getLogger(__name__)
+
 
 def get_db():
     try:
-        conn = mysql.connector.connect(
+        return mysql.connector.connect(
             host=Config.MYSQL_HOST,
             user=Config.MYSQL_USER,
             password=Config.MYSQL_PASSWORD,
             database=Config.MYSQL_DATABASE,
-            autocommit=True
+            autocommit=False,
+            connection_timeout=5,
         )
-        return conn
-    except Exception as e:
-        print(f"❌ Erro ao conectar: {e}")
+    except Error:
+        logger.exception("Não foi possível conectar ao banco de dados.")
         return None

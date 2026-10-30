@@ -1,0 +1,15 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Test and tooling output
+.pytest_cache/
+.coverage
+htmlcov/
